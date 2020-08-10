@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+</head>
+<meta charset="UTF-8">
+<title>Document HA</title>
+
+<body>
+
+{{range .}}
+--------------------------------
+{{.Name}}
+    {{range .Menu}}
+    {{.Meal}} is {{.Description}}
+    {{.Price}}
+{{end}}
+{{end}}
+
+
+</body>
+</html>
