@@ -30,9 +30,14 @@ func (this *MyLinkedList) Get(index int) int {
 	if index > this.size-1 || index < 0 {
 		return -1
 	}
-	for i := 0; i < index; i++ {
+	for i := 0; i < index && cur != nil; i++ {
 		cur = cur.next
 	}
+
+	if cur == nil {
+		return -1
+	}
+
 	return cur.val
 
 }
@@ -61,6 +66,9 @@ func (this *MyLinkedList) AddAtHead(value int) {
 func (this *MyLinkedList) AddAtTail(value int) {
 	n := &Node{
 		val: value,
+	}
+	if this.Head == nil {
+		this.AddAtHead(value)
 	}
 	if this.Tail == nil {
 		this.Tail = n
@@ -104,19 +112,22 @@ func (this *MyLinkedList) AddAtIndex(index int, value int) {
 
 /** Delete the index-th node in the linked list, if the index is valid. */
 func (this *MyLinkedList) DeleteAtIndex(index int) {
-	var cur, oldcur *Node
+	var cur *Node
 	cur = this.Head
-	if index > this.size-1 {
+	if index > this.size || index < 0 {
 		return
 	} else if index == 0 {
 		this.Head = cur.next
 
 	} else {
-		for i := 0; i < index; i++ {
-			oldcur = cur
+		for i := 0; i < index-1; i++ {
 			cur = cur.next
 		}
-		oldcur.next = cur.next
+
+		if cur.next == nil {
+			return
+		}
+		cur.next = cur.next.next
 	}
 	if this.size > 0 {
 		this.size--
